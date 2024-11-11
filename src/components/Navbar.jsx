@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import PaymentModal from './PaymentModal';
 import { FaSignInAlt, FaShoppingCart } from 'react-icons/fa';
+import { useMediaQuery } from 'react-responsive';
 import logo from '/logo.png'; // Sesuaikan path ke public/logo.png
 
 const Navbar = () => {
@@ -13,6 +14,8 @@ const Navbar = () => {
   const [cartItems, setCartItems] = useState([]);
   const navigate = useNavigate();
   const { isLoggedIn, user, logout } = useAuth();
+
+  const isMobile = useMediaQuery({ maxWidth: 768 });
 
   useEffect(() => {
     const fetchCartItems = async () => {
@@ -49,16 +52,16 @@ const Navbar = () => {
   return (
     <div className="fixed top-0 left-0 w-full bg-white border-b border-gray-200 z-50">
       <div className="flex items-center justify-between p-4">
-        <div className="flex items-center">
+        <div className={`flex items-center ${isMobile ? 'justify-start' : 'justify-start'} w-full`}>
           <a href="#" className="flex items-center">
-            <img src={logo} alt="Prasetya Outdoor Logo" className="w-20 h-8 ml-24" />
+            <img src={logo} alt="Prasetya Outdoor Logo" className="w-20 h-8" />
           </a>
         </div>
         <div className="flex items-center space-x-4">
           <div className="relative">
             <button onClick={toggleCartDropdown} className="relative flex items-center">
               <div className="bg-[#FFC107] rounded-full p-2 flex items-center justify-center">
-                <FaShoppingCart className="text-white text-xl" /> {/* Ubah warna ikon menjadi putih */}
+                <FaShoppingCart className="text-white text-xl" />
               </div>
               {cartItems.length > 0 && (
                 <span className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 text-xs font-semibold text-white bg-red-500 rounded-full w-5 h-5 flex items-center justify-center">
