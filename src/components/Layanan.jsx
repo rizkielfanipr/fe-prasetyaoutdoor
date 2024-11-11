@@ -1,15 +1,19 @@
 import React from 'react';
 import { FaTools, FaHeadset, FaMountain, FaShieldAlt, FaDollarSign, FaClock } from 'react-icons/fa';
+import { useMediaQuery } from 'react-responsive';
 
 const Layanan = () => {
+  // Menggunakan media query untuk deteksi ukuran layar
+  const isMobile = useMediaQuery({ maxWidth: 767 });
+
   return (
     <section className="bg-white dark:bg-gray-900">
       <div className="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
         <div className="max-w-screen-md mb-8 lg:mb-16">
-          <h2 className="mb-4 text-4xl tracking-tight font-extrabold font-press-start text-gray-900 dark:text-white">
+          <h2 className={`mb-4 ${isMobile ? 'text-lg text-center' : 'text-4xl'} tracking-tight font-extrabold font-press-start text-gray-900 dark:text-white`}>
             Kenapa Memilih Prasetya Outdoor?
           </h2>
-          <p className="text-gray-500 sm:text-xl dark:text-gray-400">
+          <p className={`text-gray-500 sm:text-xl dark:text-gray-400 ${isMobile ? 'text-sm text-center' : ''}`}>
             Prasetya Outdoor menawarkan pengalaman luar ruangan yang tak tertandingi dengan peralatan berkualitas tinggi dan layanan pelanggan yang luar biasa.
           </p>
         </div>
@@ -46,12 +50,12 @@ const Layanan = () => {
               icon: <FaClock className="w-4 h-4 text-white" />
             },
           ].map((item, index) => (
-            <div key={index} className="border border-gray-300 p-4 rounded-lg">
-              <div className="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-[#FFC61A] lg:h-12 lg:w-12">
+            <div key={index} className={`border border-gray-300 p-4 rounded-lg ${isMobile ? 'w-full max-w-xs mx-auto' : 'w-full'}`}>
+              <div className={`flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-[#FFC61A] ${isMobile ? 'w-8 h-8' : 'lg:h-12 lg:w-12'}`}>
                 {item.icon}
               </div>
-              <h3 className="mb-2 text-xl font-bold dark:text-white">{item.title}</h3>
-              <p className="text-gray-500 dark:text-gray-400">{item.description}</p>
+              <h3 className={`mb-2 text-xl font-bold dark:text-white ${isMobile ? 'text-sm' : ''}`}>{item.title}</h3>
+              <p className={`text-gray-500 dark:text-gray-400 ${isMobile ? 'text-xs' : ''}`}>{item.description}</p>
             </div>
           ))}
         </div>

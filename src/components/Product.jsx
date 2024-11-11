@@ -3,15 +3,11 @@ import axios from 'axios';
 import Modal from './Modal';
 import { AuthContext } from '../context/AuthContext';
 import { FaShoppingCart } from 'react-icons/fa'; // Import ikon dari react-icons
-import { useMediaQuery } from 'react-responsive'; // Import react-responsive
 
 const Product = ({ cart, setCart }) => {
   const [barang, setBarang] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const { isLoggedIn, user } = useContext(AuthContext);
-
-  // Media queries untuk menentukan ukuran layar
-  const isMobile = useMediaQuery({ maxWidth: 768 });
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -90,7 +86,7 @@ const Product = ({ cart, setCart }) => {
   };
 
   return (
-    <div className="py-10 px-4 sm:px-6 lg:px-24"> {/* Added padding for mobile devices */}
+    <div className="py-10 px-24"> {/* Added padding-left and padding-right of 50px (12 is approximately 48px) */}
       {/* Katalog Alat Section */}
       <section className="py-10 text-center">
         <h2 className="text-3xl font-semibold mb-4 font-press-start">Katalog Alat</h2>
@@ -101,7 +97,7 @@ const Product = ({ cart, setCart }) => {
       </section>
 
       {/* Product List */}
-      <div className={`mb-4 grid gap-4 ${isMobile ? 'sm:grid-cols-2' : 'sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4'}`}>
+      <div className="mb-4 grid gap-4 sm:grid-cols-2 md:mb-8 lg:grid-cols-3 xl:grid-cols-4">
         {barang.map((item) => (
           <div key={item.id} className="rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
             <div className="h-56 w-full">
@@ -112,7 +108,7 @@ const Product = ({ cart, setCart }) => {
             </div>
             <div className="pt-6">
               <div className="mb-4 flex items-center justify-between gap-4">
-                <button type="button" className="rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" onClick={() => handleProductClick(item.id)}>
+                <button type ="button" className="rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" onClick={() => handleProductClick(item.id)}>
                   <span className="sr-only">Lihat Barang</span>
                   <svg className="h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" strokeWidth="2" d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z" />
