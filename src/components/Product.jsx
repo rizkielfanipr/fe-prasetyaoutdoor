@@ -3,11 +3,16 @@ import axios from 'axios';
 import Modal from './Modal';
 import { AuthContext } from '../context/AuthContext';
 import { FaShoppingCart } from 'react-icons/fa'; // Import ikon dari react-icons
+import { useMediaQuery } from 'react-responsive'; // Import useMediaQuery
 
 const Product = ({ cart, setCart }) => {
   const [barang, setBarang] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const { isLoggedIn, user } = useContext(AuthContext);
+
+  // Media query hooks
+  const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
+  const isTablet = useMediaQuery({ query: '(max-width: 1024px)' });
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -86,21 +91,23 @@ const Product = ({ cart, setCart }) => {
   };
 
   return (
-    <div className="py-10 px-24"> {/* Added padding-left and padding-right of 50px (12 is approximately 48px) */}
+    <div className="py-10 px-6">
       {/* Katalog Alat Section */}
-      <section className="py-10 text-center">
-        <h2 className="text-3xl font-semibold mb-4 font-press-start">Katalog Alat</h2>
-        <p className="text-gray-600 max-w-2xl mx-auto">
+      <section className="py-10 justify-center">
+        <h2 className={`font-semibold mb-4 text-center font-press-start ${isMobile ? 'text-lg' : 'text-3xl'}`}>
+          Katalog Alat
+        </h2>
+        <p className={`text-gray-600 max-w-2xl mx-auto ${isMobile ? 'text-sm' : 'text-base'}`}>
           Prasetya Outdoor menyediakan perlengkapan terbaik untuk kebutuhan outdoor Anda,
           mulai dari tenda, sepatu hiking, hingga alat panjat tebing.
         </p>
       </section>
 
       {/* Product List */}
-      <div className="mb-4 grid gap-4 sm:grid-cols-2 md:mb-8 lg:grid-cols-3 xl:grid-cols-4">
+      <div className={`mb-4 grid gap-4 ${isMobile ? 'grid-cols-2' : 'sm:grid-cols-2 md:mb-8 lg:grid-cols-3 xl:grid-cols-4'}`}>
         {barang.map((item) => (
-          <div key={item.id} className="rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
-            <div className="h-56 w-full">
+          <div key={item.id} className={`rounded-lg border border-gray-200 bg-white p-4 ${isMobile ? 'p-2' : 'p-6'} dark:border-gray-700 dark:bg-gray-800`}>
+            <div className={`h-56 w-full ${isMobile ? 'h-40' : 'h-56'}`}>
               <a href="#">
                 <img className="mx-auto h-full dark:hidden" src={item.picture} alt={item.name} />
                 <img className="mx-auto hidden h-full dark:block" src={item.picture} alt={item.name} />
@@ -108,7 +115,7 @@ const Product = ({ cart, setCart }) => {
             </div>
             <div className="pt-6">
               <div className="mb-4 flex items-center justify-between gap-4">
-                <button type ="button" className="rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" onClick={() => handleProductClick(item.id)}>
+                <button type="button" className="rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" onClick={() => handleProductClick(item.id)}>
                   <span className="sr-only">Lihat Barang</span>
                   <svg className="h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" strokeWidth="2" d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z" />
@@ -116,10 +123,19 @@ const Product = ({ cart, setCart }) => {
                   </svg>
                 </button>
               </div>
-              <a href="#" className="text-lg font-semibold leading-tight text-gray-900 hover:underline dark:text-white">{item.name}</a>
-              <div className="mt-2 flex items-center justify-between">
-                <p className="text-2xl font-extrabold leading-tight text-gray-900 dark:text-white">Rp. {item.price}</p>
-                <button type="button" className="rounded-lg bg-[#FFC61A] text-white px-4 py-2 flex items-center gap-2" onClick={() => addToCart(item)}>
+              <a href="#" className={`text-lg font-semibold leading-tight text-gray-900 hover:underline dark:text-white ${isMobile ? 'text-sm' : 'text-lg'}`}>
+                {item.name}
+              </a>
+              <div className="mt-2">
+                <p className={`text-sm font-bold leading-tight text-gray-900 dark:text-white ${isMobile ? 'text-xl' : 'text-sm'}`}>
+                  Rp. {item.price}
+                </p>
+                {/* Move Add to Cart Button below the price */}
+                <button
+                  type="button"
+                  className={`mt-4 rounded-lg bg-[#FFC61A] text-white px-2 py-1 flex items-center gap-2 ${isMobile ? 'text-xs' : 'text-sm'}`}
+                  onClick={() => addToCart(item)}
+                >
                   <FaShoppingCart /> {/* Ikon dari react-icons */}
                   <span className="sr-only">Add to cart</span>
                   Add to cart
